@@ -1,6 +1,6 @@
 import java.util.*;
 
-publicclass PalindromeCheckerApp {
+public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
@@ -12,24 +12,22 @@ publicclass PalindromeCheckerApp {
         // Normalize input (remove spaces & convert to lowercase)
         String processed = input.replaceAll("\\s+", "").toLowerCase();
 
-        // Create Queue and Stack
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack = new Stack<>();
+        // Create Deque
+        Deque<Character> deque = new ArrayDeque<>();
 
-        // Enqueue and Push characters
+        // Insert characters into deque
         for (char ch : processed.toCharArray()) {
-            queue.add(ch);     // Enqueue (FIFO)
-            stack.push(ch);    // Push (LIFO)
+            deque.addLast(ch); // add to rear
         }
 
-        // Compare Queue and Stack
         boolean isPalindrome = true;
 
-        while (!queue.isEmpty()) {
-            char fromQueue = queue.remove(); // Dequeue
-            char fromStack = stack.pop();    // Pop
+        // Compare front and rear
+        while (deque.size() > 1) {
+            char front = deque.removeFirst(); // from front
+            char rear = deque.removeLast();   // from rear
 
-            if (fromQueue != fromStack) {
+            if (front != rear) {
                 isPalindrome = false;
                 break;
             }
