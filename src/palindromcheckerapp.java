@@ -1,74 +1,22 @@
 import java.util.*;
 
-class Node {
-    char data;
-    Node next;
-
-    Node(char data) {
-        this.data = data;
-        this.next = null;
-    }
-}
-
 public class PalindromeCheckerApp {
 
-    // Function to check palindrome using linked list
-    public static boolean isPalindrome(Node head) {
+    // Recursive function to check palindrome
+    public static boolean isPalindrome(String str, int start, int end) {
 
-        if (head == null || head.next == null) {
+        // Base condition: if pointers cross or meet
+        if (start >= end) {
             return true;
         }
 
-        // Step 1: Find middle using fast & slow pointers
-        Node slow = head;
-        Node fast = head;
-
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
+        // If characters don't match
+        if (str.charAt(start) != str.charAt(end)) {
+            return false;
         }
 
-        // Step 2: Reverse second half
-        Node prev = null;
-        Node current = slow;
-
-        while (current != null) {
-            Node nextNode = current.next;
-            current.next = prev;
-            prev = current;
-            current = nextNode;
-        }
-
-        // Step 3: Compare first half and reversed second half
-        Node firstHalf = head;
-        Node secondHalf = prev;
-
-        while (secondHalf != null) {
-            if (firstHalf.data != secondHalf.data) {
-                return false;
-            }
-            firstHalf = firstHalf.next;
-            secondHalf = secondHalf.next;
-        }
-
-        return true;
-    }
-
-    // Function to create linked list from string
-    public static Node createLinkedList(String str) {
-        Node head = null, tail = null;
-
-        for (char ch : str.toCharArray()) {
-            Node newNode = new Node(ch);
-            if (head == null) {
-                head = tail = newNode;
-            } else {
-                tail.next = newNode;
-                tail = newNode;
-            }
-        }
-
-        return head;
+        // Recursive call for inner substring
+        return isPalindrome(str, start + 1, end - 1);
     }
 
     public static void main(String[] args) {
@@ -81,13 +29,10 @@ public class PalindromeCheckerApp {
         // Normalize input
         String processed = input.replaceAll("\\s+", "").toLowerCase();
 
-        // Convert to linked list
-        Node head = createLinkedList(processed);
+        // Call recursive function
+        boolean result = isPalindrome(processed, 0, processed.length() - 1);
 
-        // Check palindrome
-        boolean result = isPalindrome(head);
-
-        // Output
+        // Output result
         if (result) {
             System.out.println("The given string is a Palindrome.");
         } else {
