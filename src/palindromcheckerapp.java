@@ -1,43 +1,45 @@
+import java.util.*;
 
-import java.util.Scanner;
-import java.util.Stack;
-import java.util.Queue;
-import java.util.LinkedList;
-
-public class palindromcheckerapp {
+publicclass PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        Stack<Character> stack = new Stack<>();
-        Queue<Character> queue = new LinkedList<>();
-
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        // Insert characters into Stack and Queue
-        for (int i = 0; i < input.length(); i++) {
-            char ch = input.charAt(i);
-            stack.push(ch);     // LIFO
-            queue.add(ch);      // FIFO
+        // Normalize input (remove spaces & convert to lowercase)
+        String processed = input.replaceAll("\\s+", "").toLowerCase();
+
+        // Create Queue and Stack
+        Queue<Character> queue = new LinkedList<>();
+        Stack<Character> stack = new Stack<>();
+
+        // Enqueue and Push characters
+        for (char ch : processed.toCharArray()) {
+            queue.add(ch);     // Enqueue (FIFO)
+            stack.push(ch);    // Push (LIFO)
         }
 
+        // Compare Queue and Stack
         boolean isPalindrome = true;
 
-        // Compare dequeue from queue and pop from stack
-        while (!stack.isEmpty()) {
-            if (stack.pop() != queue.remove()) {
+        while (!queue.isEmpty()) {
+            char fromQueue = queue.remove(); // Dequeue
+            char fromStack = stack.pop();    // Pop
+
+            if (fromQueue != fromStack) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        // Print result
+        // Output result
         if (isPalindrome) {
-            System.out.println(input + " is a Palindrome.");
+            System.out.println("The given string is a Palindrome.");
         } else {
-            System.out.println(input + " is not a Palindrome.");
+            System.out.println("The given string is NOT a Palindrome.");
         }
 
         sc.close();
