@@ -1,21 +1,24 @@
 public class palindromcheckerapp {
 
-    // Main method - Entry point of the Java application
     public static void main(String[] args) {
 
-        // Display welcome message
-        System.out.println("=======================================");
-        System.out.println("     Welcome to Palindrome Checker App");
-        System.out.println("=======================================");
+        // Original string
+        String original = "madam";
 
-        // Display application details
-        System.out.println("Application Name : Palindrome Checker App");
-        System.out.println("Version          : 1.0");
+        // Variable to store reversed string
+        String reversed = "";
 
-        // Inform user about next step
-        System.out.println("---------------------------------------");
-        System.out.println("Application started successfully.");
-        System.out.println("Ready to perform palindrome validation.");
-        System.out.println("---------------------------------------");
+        // Reverse the string using for loop
+        for (int i = original.length() - 1; i >= 0; i--) {
+            reversed = reversed + original.charAt(i);
+        }
+
+        // Compare original and reversed string
+        if (original.equals(reversed)) {
+            System.out.println(original + " is a Palindrome");
+        } else {
+            System.out.println(original + " is not a Palindrome");
+        }
     }
 }
+
